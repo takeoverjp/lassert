@@ -38,7 +38,7 @@ ASSERT_EQ_IMPL(const std::string &file, const int lineno,
   std::cerr << file << ": " << lineno << ": " << func << ": error: check "
             << exp_symbol << " == " << act_symbol << " has failed [" << exp
             << " != " << act << "]" << std::endl;
-#if defined(TEST_LASSERT)
+#if !defined(TEST_LASSERT)
   std::terminate();
 #endif
 }

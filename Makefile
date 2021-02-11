@@ -4,10 +4,10 @@ all: $(PROGRAMS)
 CPPFLAGS=-DTEST_LASSERT
 CXXFLAGS=-W -Wall -g -Og
 test14: test.cc lassert.h
-	g++ -std=c++14 $(CXXFLAGS) -o $@ $<
+	g++ -std=c++14 $(CPPFLAGS) $(CXXFLAGS) -o $@ $<
 
 test11: test.cc lassert.h
-	g++ -std=c++11 $(CXXFLAGS) -o $@ $<
+	g++ -std=c++11 $(CPPFLAGS) $(CXXFLAGS) -o $@ $<
 
 format:
 	clang-format -i *.h *.cc

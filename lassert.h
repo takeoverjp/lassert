@@ -19,16 +19,18 @@ static inline std::ostream &operator<<(std::ostream &iOStream, tEnum iEnum) {
 }
 
 #if __cplusplus >= 201402L
-static inline void
-ASSERT_EQ_IMPL(const std::string &func, const std::string &file,
-               const int lineno, const std::string &exp_symbol, const auto &exp,
-               const std::string &act_symbol, const auto &act) {
+static inline void ASSERT_EQ_IMPL(const std::string &file, const int lineno,
+                                  const std::string &func,
+                                  const std::string &exp_symbol,
+                                  const auto &exp,
+                                  const std::string &act_symbol,
+                                  const auto &act) {
 #else
 template <class T1, class T2>
 static inline void
-ASSERT_EQ_IMPL(const std::string &func, const std::string &file,
-               const int lineno, const std::string &exp_symbol, const T1 &exp,
-               const std::string &act_symbol, const T2 &act) {
+ASSERT_EQ_IMPL(const std::string &file, const int lineno,
+               const std::string &func, const std::string &exp_symbol,
+               const T1 &exp, const std::string &act_symbol, const T2 &act) {
 #endif
   if (exp == act) {
     return;
@@ -43,7 +45,7 @@ ASSERT_EQ_IMPL(const std::string &func, const std::string &file,
 
 #define ASSERT_EQ(exp, act)                                                    \
   do {                                                                         \
-    ASSERT_EQ_IMPL(__func__, __FILE__, __LINE__, #exp, exp, #act, act);        \
+    ASSERT_EQ_IMPL(__FILE__, __LINE__, __func__, #exp, exp, #act, act);        \
   } while (0)
 
 #endif // LASSERT_H_

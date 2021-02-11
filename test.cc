@@ -10,6 +10,14 @@
 static void TestInt() {
   int exp, act;
 
+  exp = 1;
+  act = 1;
+  ASSERT_EQ(exp, act);
+
+  exp = 1;
+  act = 2;
+  ASSERT_EQ(exp, act);
+
   exp = 2;
   act = 1;
   ASSERT_EQ(exp, ++act);

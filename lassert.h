@@ -13,9 +13,34 @@ template <typename ScopedEnumType,
           typename std::enable_if<std::is_enum<ScopedEnumType>::value,
                                   std::nullptr_t>::type = nullptr>
 static inline std::ostream &operator<<(std::ostream &ostrm,
-                                       ScopedEnumType enum_val) {
+                                       ScopedEnumType val) {
   ostrm << static_cast<typename std::underlying_type<ScopedEnumType>::type>(
-      enum_val);
+      val);
+  return ostrm;
+}
+
+template <class>
+struct is_container : std::false_type {};
+
+template <class T, class ALLOCATOR>
+struct is_container<std::vector<T, ALLOCATOR>> : std::true_type {};
+
+template <class T, class ALLOCATOR>
+struct is_container<std::set<T, ALLOCATOR>> : std::true_type {};
+
+template <typename ContainerType,
+          typename std::enable_if<is_container<ContainerType>::value,
+                                  std::nullptr_t>::type = nullptr>
+static inline std::ostream &operator<<(std::ostream &ostrm, ContainerType val) {
+  if (val.empty()) {
+    ostrm << "[]";
+    return ostrm;
+  }
+  ostrm << "[";
+  for (const auto &mem : val) {
+    ostrm << mem << ", ";
+  }
+  ostrm << "\b\b]";
   return ostrm;
 }
 

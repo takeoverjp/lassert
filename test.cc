@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#include <set>
 #include <vector>
 
 #include "lassert.h"
@@ -66,7 +67,6 @@ static void TestString() {
 }
 
 static void TestVector() {
-#if 0
   std::vector<int> exp, act;
 
   exp = {1, 2, 3};
@@ -76,7 +76,30 @@ static void TestVector() {
   exp = {1, 2, 3};
   act = {1, 2, 4};
   ASSERT_EQ(exp, act);
-#endif
+}
+
+static void TestStringVector() {
+  std::vector<std::string> exp, act;
+
+  exp = {"1", "2", "3"};
+  act = {"1", "2", "3"};
+  ASSERT_EQ(exp, act);
+
+  exp = {"1", "2", "3"};
+  act = {"1", "2", "4"};
+  ASSERT_EQ(exp, act);
+}
+
+static void TestSet() {
+  std::set<int> exp, act;
+
+  exp = {1, 2, 3};
+  act = {1, 2, 3};
+  ASSERT_EQ(exp, act);
+
+  exp = {1, 2, 3};
+  act = {1, 2, 4};
+  ASSERT_EQ(exp, act);
 }
 
 int main(void) {
@@ -85,6 +108,8 @@ int main(void) {
   TestBool();
   TestString();
   TestVector();
+  TestStringVector();
+  TestSet();
 
   return 0;
 }

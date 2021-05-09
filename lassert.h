@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 
+namespace lassert {
+
 template <typename ScopedEnumType,
           typename std::enable_if<std::is_enum<ScopedEnumType>::value,
                                   std::nullptr_t>::type = nullptr>
@@ -73,9 +75,11 @@ static inline void ASSERT_EQ_IMPL(const std::string &file, const int lineno,
 #endif
 }
 
-#define ASSERT_EQ(exp, act)                                             \
-  do {                                                                  \
-    ASSERT_EQ_IMPL(__FILE__, __LINE__, __PRETTY_FUNCTION__, #exp, exp, #act, act); \
+#define ASSERT_EQ(exp, act)                                                \
+  do {                                                                     \
+    lassert::ASSERT_EQ_IMPL(__FILE__, __LINE__, __PRETTY_FUNCTION__, #exp, \
+                            exp, #act, act);                               \
   } while (0)
 
+}  // namespace lassert
 #endif  // LASSERT_H_

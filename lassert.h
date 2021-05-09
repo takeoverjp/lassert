@@ -72,7 +72,7 @@ static inline void ASSERT_EQ_IMPL(const std::string &file, const int lineno,
 
 #define ASSERT_EQ(exp, act)                                             \
   do {                                                                  \
-    ASSERT_EQ_IMPL(__FILE__, __LINE__, __func__, #exp, exp, #act, act); \
+    ASSERT_EQ_IMPL(__FILE__, __LINE__, __PRETTY_FUNCTION__, #exp, exp, #act, act); \
   } while (0)
 
 #endif  // LASSERT_H_

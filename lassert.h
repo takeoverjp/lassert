@@ -9,13 +9,14 @@
 #include <iostream>
 #include <string>
 
-template <typename tEnum,
-          typename std::enable_if<std::is_enum<tEnum>::value,
+template <typename ScopedEnumType,
+          typename std::enable_if<std::is_enum<ScopedEnumType>::value,
                                   std::nullptr_t>::type = nullptr>
-static inline std::ostream &operator<<(std::ostream &iOStream, tEnum iEnum) {
-  typedef typename std::underlying_type<tEnum>::type Type;
-  iOStream << static_cast<Type>(iEnum);
-  return iOStream;
+static inline std::ostream &operator<<(std::ostream &ostrm,
+                                       ScopedEnumType enum_val) {
+  ostrm << static_cast<typename std::underlying_type<ScopedEnumType>::type>(
+      enum_val);
+  return ostrm;
 }
 
 #if __cplusplus >= 201402L
@@ -27,10 +28,11 @@ static inline void ASSERT_EQ_IMPL(const std::string &file, const int lineno,
                                   const auto &act) {
 #else
 template <class T1, class T2>
-static inline void
-ASSERT_EQ_IMPL(const std::string &file, const int lineno,
-               const std::string &func, const std::string &exp_symbol,
-               const T1 &exp, const std::string &act_symbol, const T2 &act) {
+static inline void ASSERT_EQ_IMPL(const std::string &file, const int lineno,
+                                  const std::string &func,
+                                  const std::string &exp_symbol, const T1 &exp,
+                                  const std::string &act_symbol,
+                                  const T2 &act) {
 #endif
   if (exp == act) {
     return;
@@ -43,9 +45,9 @@ ASSERT_EQ_IMPL(const std::string &file, const int lineno,
 #endif
 }
 
-#define ASSERT_EQ(exp, act)                                                    \
-  do {                                                                         \
-    ASSERT_EQ_IMPL(__FILE__, __LINE__, __func__, #exp, exp, #act, act);        \
+#define ASSERT_EQ(exp, act)                                             \
+  do {                                                                  \
+    ASSERT_EQ_IMPL(__FILE__, __LINE__, __func__, #exp, exp, #act, act); \
   } while (0)
 
-#endif // LASSERT_H_
+#endif  // LASSERT_H_

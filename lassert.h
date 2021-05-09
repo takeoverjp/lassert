@@ -23,10 +23,13 @@ template <class>
 struct is_container : std::false_type {};
 
 template <class T, class ALLOCATOR>
+struct is_container<std::set<T, ALLOCATOR>> : std::true_type {};
+
+template <class T, class ALLOCATOR>
 struct is_container<std::vector<T, ALLOCATOR>> : std::true_type {};
 
 template <class T, class ALLOCATOR>
-struct is_container<std::set<T, ALLOCATOR>> : std::true_type {};
+struct is_container<std::unordered_set<T, ALLOCATOR>> : std::true_type {};
 
 template <typename ContainerType,
           typename std::enable_if<is_container<ContainerType>::value,

@@ -5,6 +5,7 @@
 
 #include <set>
 #include <vector>
+#include <unordered_set>
 
 #include "lassert.h"
 
@@ -66,8 +67,9 @@ static void TestString() {
   ASSERT_EQ(exp, act);
 }
 
-static void TestVector() {
-  std::vector<int> exp, act;
+template<class IntContainerType>
+static void TestIntContainer() {
+  IntContainerType exp, act;
 
   exp = {1, 2, 3};
   act = {1, 2, 3};
@@ -78,8 +80,9 @@ static void TestVector() {
   ASSERT_EQ(exp, act);
 }
 
-static void TestStringVector() {
-  std::vector<std::string> exp, act;
+template<class StringContainerType>
+static void TestStringContainer() {
+  StringContainerType exp, act;
 
   exp = {"1", "2", "3"};
   act = {"1", "2", "3"};
@@ -94,7 +97,7 @@ static void TestSet() {
   std::set<int> exp, act;
 
   exp = {1, 2, 3};
-  act = {1, 2, 3};
+  act = {1, 3, 2};
   ASSERT_EQ(exp, act);
 
   exp = {1, 2, 3};
@@ -107,8 +110,12 @@ int main(void) {
   TestScopedEnum();
   TestBool();
   TestString();
-  TestVector();
-  TestStringVector();
+  TestIntContainer<std::set<int>>();
+  TestIntContainer<std::unordered_set<int>>();
+  TestIntContainer<std::vector<int>>();
+  TestStringContainer<std::set<std::string>>();
+  TestStringContainer<std::unordered_set<std::string>>();
+  TestStringContainer<std::vector<std::string>>();
   TestSet();
 
   return 0;

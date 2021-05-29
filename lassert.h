@@ -67,18 +67,19 @@ static inline void ASSERT_EQ_IMPL(const std::string &file, const int lineno,
   if (exp == act) {
     return;
   }
-  std::cerr << file << ": " << lineno << ": " << func << ": error: check "
-            << exp_symbol << " == " << act_symbol << " has failed [" << exp
+  std::cerr << file << ":" << lineno << ":" << func
+            << ": \033[1;31merror:\033[0m check \033[1;31m" << exp_symbol
+            << " == " << act_symbol << "\033[0m has failed [" << exp
             << " != " << act << "]" << std::endl;
 #if !defined(TEST_LASSERT)
   std::terminate();
 #endif
 }
 
-#define ASSERT_EQ(exp, act)                                                \
-  do {                                                                     \
-    lassert::ASSERT_EQ_IMPL(__FILE__, __LINE__, __PRETTY_FUNCTION__, #exp, \
-                            exp, #act, act);                               \
+#define ASSERT_EQ(exp, act)                                                    \
+  do {                                                                         \
+    lassert::ASSERT_EQ_IMPL(__FILE__, __LINE__, __FUNCTION__, #exp, exp, #act, \
+                            act);                                              \
   } while (0)
 
 }  // namespace lassert
